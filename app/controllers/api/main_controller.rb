@@ -20,6 +20,8 @@ class Api::MainController < ApplicationController
             @crn = Crn.find_by(crn: request_params[:crn])
             Request.where(user_id: @user.id, crn_id: @crn.id).first.update(is_active: true)
         end
+
+        render json: {}
     end
 
     def check_available
