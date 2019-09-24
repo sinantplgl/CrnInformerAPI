@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get 'addrequest', to: 'main#create', as: 'create'
     get 'checkspace', to: 'main#check_available', as: 'check'
     get 'sendmail', to: 'main#inform_by_mail', as: 'mail'
+    get 'checkcrn/:crn', to: 'main#checkcrn', as: 'checkcrn'
   end
 
   root to: 'main#index'

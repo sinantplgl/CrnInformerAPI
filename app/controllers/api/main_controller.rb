@@ -62,6 +62,15 @@ class Api::MainController < ApplicationController
             end
         end
     end
+
+    def checkcrn
+        crn = Crn.find_by(crn: params[:crn])
+        if not crn
+            crn = Crn.create(crn: params[:crn])
+        end
+        rem = check_crn(crn)
+        render json: rem.nil? ? nil : { crn: crn.crn, space: rem }
+    end
     
     private
 
