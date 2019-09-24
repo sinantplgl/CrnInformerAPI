@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style>
+            @import url("https://fonts.googleapis.com/css?family=Lato");
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Lato', Sans-Serif;
+                font-size: 62.5%;
+                /* 10px */
+                width: 100%;
+                height: 100vh;
+                background-color: #212121;
+            }
+
+            .align {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .login {
+                background-color: #323232;
+                height: 20rem;
+                width: 20rem;
+                margin-top: 10rem;
+                padding: 3rem;
+                box-sizing: border-box;
+                border-radius: 0rem;
+                -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.39);
+                -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.39);
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.39);
+            }
+
+            .bar {
+                background-color: #14FFEC;
+                height: 0.2rem;
+                margin-top: -3rem;
+                margin-left: -3rem;
+                width: 20rem;
+            }
+
+            h2 {
+                color: #14FFEC;
+                padding: 2rem 0 1.3rem 0;
+                letter-spacing: 0.3rem;
+                text-transform: uppercase;
+            }
+
+            .login > button {
+                display: block;
+                width: 100%;
+                background-color: #14FFEC;
+            }
+
+            button {
+                width: 20rem;
+                padding: 0.6rem;
+                margin: 2rem 0;
+                text-decoration: none;
+                border: none;
+                font-family: 'Lato';
+                cursor: pointer;
+                color: #212121;
+                outline: 0;
+            }
+
+            input {
+                display: block;
+                width: 100%;
+                padding: 0.5rem;
+                box-sizing: border-box;
+                margin: 1rem 0;
+                background-color: #656565;
+                font-size: 0.7rem;
+                font-family: 'Lato';
+                outline: 0;
+                border: 0;
+            }
+
+            input::placeholder {
+                color: #989898;
+            }
+
+            input:active, input:focus {
+                background-color: #989898;
+                outline: 0.1rem solid #14FFEC;
+                color: #ffffff;
+                border: none;
+            }
+
+            p {
+                color: #989898;
+                padding-top: 0.8rem;
+                margin-bottom: -1.5rem;
+                font-size: 0.8rem;
+            }
+
+            a:link, a:visited, a:hover, a:active {
+                text-decoration: none;
+                color: #ffffff;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="align">
+            <div class="login">
+                <div class="bar">&nbsp;</div>
+                <h2>Request an Alert</h2>
+                <input type="text" id="email" placeholder="Enter SU-net username" required>
+                <input type="text" id="crn" placeholder="Enter CRN" required>
+                <button id="submit">Submit</button>
+            </div>                    
+        </div>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $('#submit').on('click', function (e) {
+            e.preventDefault()
+            var url = 'http://34.70.23.211:3000/'
+            var path = `/api/addrequest?email=${$('#email').val()}&crn=${$('#crn').val()}`
+
+            $.ajax(url+path, {
+                method: 'GET',
+                dataType: 'json',
+                success: function (){
+                    alert("Added to list!")
+                }
+            })
+        })
+    </script>
+</html>

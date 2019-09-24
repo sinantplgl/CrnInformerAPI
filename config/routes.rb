@@ -5,4 +5,6 @@ Rails.application.routes.draw do
     get 'checkspace', to: 'main#check_available', as: 'check'
     get 'sendmail', to: 'main#inform_by_mail', as: 'mail'
   end
+
+  root to: 'main#index'
 end
