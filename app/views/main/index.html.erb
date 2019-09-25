@@ -24,7 +24,7 @@
 
             .login {
                 background-color: #323232;
-                height: 20rem;
+                height: 22rem;
                 width: 20rem;
                 margin-top: 10rem;
                 padding: 3rem;
@@ -103,6 +103,10 @@
                 text-decoration: none;
                 color: #ffffff;
             }
+            button:disabled {
+                cursor: not-allowed;
+                pointer-events: all !important;
+            }
         </style>
     </head>
 
@@ -111,14 +115,31 @@
             <div class="login">
                 <div class="bar">&nbsp;</div>
                 <h2>Request an Alert</h2>
-                <input type="text" id="email" placeholder="Enter SU-net username" required>
+                <input type="text" id="email" placeholder="Enter SU-net username (not email)" required>
                 <input type="text" id="crn" placeholder="Enter CRN" required>
-                <button id="submit">Submit</button>
+                <button id="submit" disabled>Submit</button>
+
+                <p>Also available as Telegram Bot!</p>
+                <p><a href="https://t.me/CapacityInformerBot" target="_blank">Click</a> to start using now.</p>
             </div>                    
         </div>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="js/jquery.inputmask.min.js"></script>
+
     <script>
+        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+        $('#crn').inputmask({
+            mask: '99999',
+            showMaskOnFocus: false,
+            showMaskOnHover: false
+        })
         $('#submit').on('click', function (e) {
             e.preventDefault()
             var url = 'http://34.70.23.211:3000/'
@@ -128,9 +149,33 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function (){
-                    alert("Added to list!")
+                    Toast.fire({
+                        type: 'success',
+                        title: "Subscribed to the alert list of requested CRN!"
+                    })            
+                },
+                error: function(xhr, status, error){
+                    Toast.fire({
+                        type: 'error',
+                        title: "Something happened, couldn't complete the action..."
+                    })            
                 }
             })
+        })
+
+        $('#crn').on('input', function(){
+            if(Inputmask.isValid($(this).val(), { mask: '99999'}))
+                $("#submit").attr("disabled", false);
+            else
+                $("#submit").attr("disabled", true);
+        })
+        $('#email').on('input', function(){
+            if($(this).val().length == 0)
+                $("#submit").attr("disabled", true);
+            else if($(this).val().split('@').length > 1)
+                $("#submit").attr("disabled", true);
+            else
+                $("#submit").attr("disabled", false);
         })
     </script>
 </html>
