@@ -163,19 +163,24 @@
             })
         })
 
-        $('#crn').on('input', function(){
-            if(Inputmask.isValid($(this).val(), { mask: '99999'}))
-                $("#submit").attr("disabled", false);
+        function check_input()
+        {
+            if(! Inputmask.isValid($(this).val(), { mask: '99999'})) //Check CRN
+                return true
+            else if($(this).val().length == 0) //Check email
+                return true
+            else if($(this).val().split('@').length > 1)
+                return true
             else
-                $("#submit").attr("disabled", true);
+                return false
+
+        }
+
+        $('#crn').on('input', function(){
+            $("#submit").attr("disabled", check_input())
         })
         $('#email').on('input', function(){
-            if($(this).val().length == 0)
-                $("#submit").attr("disabled", true);
-            else if($(this).val().split('@').length > 1)
-                $("#submit").attr("disabled", true);
-            else
-                $("#submit").attr("disabled", false);
+            $("#submit").attr("disabled", check_input())
         })
     </script>
 </html>
