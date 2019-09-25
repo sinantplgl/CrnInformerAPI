@@ -165,11 +165,11 @@
 
         function check_input()
         {
-            if(! Inputmask.isValid($(this).val(), { mask: '99999'})) //Check CRN
+            if(! Inputmask.isValid($('#crn').val(), { mask: '99999'})) //Check CRN
                 return true
-            else if($(this).val().length == 0) //Check email
+            else if($('#email').val().length == 0) //Check email
                 return true
-            else if($(this).val().split('@').length > 1)
+            else if($('#email').val().split('@').length > 1)
                 return true
             else
                 return false
